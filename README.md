@@ -1,5 +1,7 @@
-# interval-tree-applet
+# Interval Tree Applet
 Javascript visualization of Interval Trees
+
+View at <https://aaronkirtland.com/interval-tree-applet/>
 
 ## CSE546t
 
@@ -13,5 +15,5 @@ Aaron Kirtland
 
 1.
 2.
-3. 
+3.
 4.
