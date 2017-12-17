@@ -1,5 +1,6 @@
 "use strict";
 
+var tree;
 var data;
 var points = [];
 
@@ -12,31 +13,38 @@ function AddPoint() {
   }
   x = Number(x);
   y = Number(y);
+  // if (y > x) {
+  //   alert("x must be less than y");
+  //   return false;
+  // }
   points.push([x, y]);
+  AppendLI([x, y]);
 
-  var cList = $('#points_text')
-  var li = $('<li/>')
-    .click(function() {
-      points.splice($(this).index(), 1);
-      $(this).remove();
-      var tree = constructIntervalTree(points);
-      if (tree) {
-        data = tree.getData();
-      } else {
-        data = {
-          nodes: [],
-          edges: []
-        };
-      }
-      draw()
-    })
-    .text(x + ',' + y)
-    .addClass("point")
-    .appendTo(cList);
-
-  var tree = constructIntervalTree(points);
+  tree = constructIntervalTree(points);
   data = tree.getData();
   draw();
+}
+
+function AppendLI(point) {
+  var cList = $('#points_text')
+var li = $('<li/>')
+  .click(function() {
+    points.splice($(this).index(), 1);
+    $(this).remove();
+    tree = constructIntervalTree(points);
+    if (tree) {
+      data = tree.getData();
+    } else {
+      data = {
+        nodes: [],
+        edges: []
+      };
+    }
+    draw();
+  })
+  .text(point[0] + ',' + point[1])
+  .addClass("point")
+  .appendTo(cList);
 }
 
 function Query() {
@@ -46,6 +54,7 @@ function Query() {
     return false;
   }
   x = Number(x);
+  $("#query-results").text(pointsToString(tree.query(x)));
 }
 
 function draw() {
@@ -86,14 +95,18 @@ $(document).ready(function() {
     $('#direction').val("RL");
     draw();
   });
-  var tree = constructIntervalTree([
+  points = [
     [1888, 1971],
     [1874, 1951],
     [1843, 1907],
     [1779, 1828],
     [1756, 1791],
     [1585, 1672]
-  ]);
+  ];
+  for (var i = 0; i < points.length; ++i) {
+    AppendLI(points[i]);
+  }
+  tree = constructIntervalTree(points);
   data = tree.getData();
   draw();
 });

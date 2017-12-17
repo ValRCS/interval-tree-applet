@@ -5,13 +5,13 @@
 }
 
 #points_text {
-  margin: 30;
-  padding: 30;
-  overflow: hidden;
+  /*margin: 30;
+  padding: 30;*/
+  /*overflow: hidden;*/
 }
 
 .point {
   float: left;
-  list-style-position:inside;
+  list-style-position: inside;
   margin: 15px;
 }

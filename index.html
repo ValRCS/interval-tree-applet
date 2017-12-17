@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
+
 <head>
   <title>Interval Tree Applet</title>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
@@ -12,34 +13,44 @@
   <link rel="stylesheet" href="./index.css">
 
 </head>
+
 <body>
 
-<h1>1-D Interval Tree Applet</h1>
-<p>Enter an x-coordinate and a y-coordinate to add a point to the tree.</p>
-<form name="EnterPointForm" onsubmit="AddPoint(); return false">
-  <input name="x" type="number" step="any" placeholder="x-coordinate"/>
-  <input name="y" type="number" step="any" placeholder="y-coordinate"/>
-  <input type="submit" value="Submit">
-</form>
-<p>Change the orientation of the tree with the following button:</p>
-<p>
-    <input type="button" id="btn-UD" value="Up-Down">
-    <input type="button" id="btn-DU" value="Down-Up">
-    <input type="button" id="btn-LR" value="Left-Right">
-    <input type="button" id="btn-RL" value="Right-Left">
-    <input type="hidden" id='direction' value="UD">
-</p>
-<p>Enter a query coordinate to show the intervals containing that point.</p>
-<form name="QueryForm" onsubmit="Query(); return false">
-  <input name="x" type="number" step="any" placeholder="query point"/>
-  <input type="submit" value="Submit">
-</form>
+  <h1 style="text-align: center">1-D Interval Tree Applet</h1>
 
-
-<div id="mynetwork"></div>
-
-<p>Below this holds the points list submitted from the form above. Click a point to remove it from the list and update the tree.</p>
-<ul id="points_text" />
-
+  <div style="width: 100%;">
+    <div style="float:left; width: 50%;">
+      <p>Enter an x-coordinate and a y-coordinate to add a point to the tree.</p>
+      <form method="post" name="EnterPointForm" onsubmit="AddPoint(); return false">
+        <input name="x" type="number" step="any" placeholder="x-coordinate" />
+        <input name="y" type="number" step="any" placeholder="y-coordinate" />
+        <input type="submit" value="Submit">
+      </form>
+      <p>Change the orientation of the tree with the following button:</p>
+      <input type="button" id="btn-UD" value="Up-Down">
+      <input type="button" id="btn-DU" value="Down-Up">
+      <input type="button" id="btn-LR" value="Left-Right">
+      <input type="button" id="btn-RL" value="Right-Left">
+      <input type="hidden" id='direction' value="UD">
+      <p>Enter a query coordinate to show the intervals containing that point.</p>
+      <form method="post" name="QueryForm" onsubmit="Query(); return false">
+        <input name="x" type="number" step="any" placeholder="query point" />
+        <input type="submit" value="Submit">
+      </form>
+      <p>Explain construction and query calculation</p>
+      <input type="button" id="explain-construction-button" value="Explain Construction">
+      <input type="button" id="explain-query-button" value="Explain Query">
+      <div id="mynetwork"></div>
+    </div>
+    <div style="float:right; width: 50%;">
+      <p>Results from query:
+        <p></p>
+        <p id="query-results"></p>
+        <p>Below this holds the points list submitted from the form above. Click a point to remove it from the list and update the tree.</p>
+        <ul data-empty-message="List of Points" id="points_text" />
+    </div>
+  </div>
+  <div style="clear:both"></div>
 </body>
+
 </html>

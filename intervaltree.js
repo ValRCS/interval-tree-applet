@@ -25,7 +25,9 @@ IntervalTreeNode.prototype.query = function(value) {
       }
       break;
     }
-    points = points.concat(this.left.query(value));
+    if (this.left) {
+      points = points.concat(this.left.query(value));
+    }
   } else {
     for (var i = 0; i < this.mr.length; ++i) {
       if (this.mr[i][1] >= value) {
@@ -34,24 +36,30 @@ IntervalTreeNode.prototype.query = function(value) {
       }
       break;
     }
-    points = points.concat(this.right.query(value));
+    if (this.right) {
+      points = points.concat(this.right.query(value));
+    }
   }
   return points;
 }
 
+function pointsToString(array) {
+  var str = '[';
+  for (var i = 0; i < array.length; ++i) {
+    if (i != 0) {
+      str += ',';
+    }
+    str += '[' + array[i][0] + ',' + array[i][1] + ']';
+  }
+  str += ']';
+  return str;
+}
+
 IntervalTreeNode.prototype.getData = function() {
   if (this) {
-    var str = '[';
-    for (var i = 0; i < this.ml.length; ++i) {
-      if (i != 0) {
-        str += ',';
-      }
-      str += '['+this.ml[i][0]+','+this.ml[i][1]+']';
-    }
-    str += ']';
     var nodes = [{
       id: this.id,
-      label: "x-mid: "+this.median + '\n' + str
+      label: "x-mid: " + this.median + '\n' + pointsToString(this.ml)
     }];
     var edges = [];
     if (this.left) {
