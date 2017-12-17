@@ -9,23 +9,62 @@ function AddPoint() {
   }
   points.push([x, y]);
   document.getElementById("points_text").innerHTML = points.toString();
+  var tree = constructIntervalTree(points);
+
+}
+
+// var directionInput = $("#direction");
+// $("#btn-UD").click(function () {
+//     directionInput.value = "UD";
+//     draw();
+// });
+// $("#btn-DU").click(function () {
+//     directionInput.value = "DU";
+//     draw();
+// });
+// $("#btn-LR").click(function () {
+//     directionInput.value = "LR";
+//     draw();
+// )};
+// $("#btn-RL").click(function () {
+//     directionInput.value = "RL";
+//     draw();
+// };
+
+function draw(data) {
+  var container = $('#mynetwork')[0];
+  var options = {
+    layout: {
+      hierarchical: {
+        direction: "UD",
+        sortMethod: 'directed'
+      }
+    }
+  };
+  var network = new vis.Network(container, data, options);
 }
 
 $(document).ready(function() {
-  // create a network
-  var container = document.getElementById('mynetwork');
-  var data = {
+  $.getScript("./intervaltree.js");
+  var tree = constructIntervalTree([
+    [1888, 1971],
+    [1874, 1951],
+    [1843, 1907],
+    [1779, 1828],
+    [1756, 1791],
+    [1585, 1672]
+  ]);
+  draw({
     nodes: nodes,
     edges: edges
-  };
-  var options = {};
-  var network = new vis.Network(container, data, options);
+  });
+  draw(tree.getData());
 });
 
 var points = [];
 
 // create an array with nodes
-var nodes = new vis.DataSet([{
+var nodes = [{
     id: 1,
     label: 'Node 1'
   },
@@ -45,10 +84,10 @@ var nodes = new vis.DataSet([{
     id: 5,
     label: 'Node 5'
   }
-]);
+];
 
 // create an array with edges
-var edges = new vis.DataSet([{
+var edges = [{
     from: 1,
     to: 3
   },
@@ -68,4 +107,4 @@ var edges = new vis.DataSet([{
     from: 3,
     to: 3
   }
-]);
+];
