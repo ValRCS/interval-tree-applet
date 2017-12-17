@@ -3,3 +3,15 @@
   height: 400px;
   border: 1px solid lightgray;
 }
+
+#points_text {
+  margin: 30;
+  padding: 30;
+  overflow: hidden;
+}
+
+.point {
+  float: left;
+  list-style-position:inside;
+  margin: 15px;
+}

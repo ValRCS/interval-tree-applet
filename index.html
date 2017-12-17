@@ -14,11 +14,14 @@
 </head>
 <body>
 
+<h1>1-D Interval Tree Applet</h1>
+<p>Enter an x-coordinate and a y-coordinate to add a point to the tree.</p>
 <form name="EnterPointForm" onsubmit="AddPoint(); return false">
   <input name="x" type="number" step="any" placeholder="x-coordinate"/>
   <input name="y" type="number" step="any" placeholder="y-coordinate"/>
   <input type="submit" value="Submit">
 </form>
+<p>Change the orientation of the tree with the following button:</p>
 <p>
     <input type="button" id="btn-UD" value="Up-Down">
     <input type="button" id="btn-DU" value="Down-Up">
@@ -26,12 +29,17 @@
     <input type="button" id="btn-RL" value="Right-Left">
     <input type="hidden" id='direction' value="UD">
 </p>
+<p>Enter a query coordinate to show the intervals containing that point.</p>
+<form name="QueryForm" onsubmit="Query(); return false">
+  <input name="x" type="number" step="any" placeholder="query point"/>
+  <input type="submit" value="Submit">
+</form>
 
-<p id="points_text">
-  "placeholder"
-</p>
 
 <div id="mynetwork"></div>
+
+<p>Below this holds the points list submitted from the form above. Click a point to remove it from the list and update the tree.</p>
+<ul id="points_text" />
 
 </body>
 </html>

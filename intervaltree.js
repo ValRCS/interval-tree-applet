@@ -41,10 +41,17 @@ IntervalTreeNode.prototype.query = function(value) {
 
 IntervalTreeNode.prototype.getData = function() {
   if (this) {
-    console.log(this.median + '\n' + this.id + '\n' + this.ml + '\n' + this.mr);
+    var str = '[';
+    for (var i = 0; i < this.ml.length; ++i) {
+      if (i != 0) {
+        str += ',';
+      }
+      str += '['+this.ml[i][0]+','+this.ml[i][1]+']';
+    }
+    str += ']';
     var nodes = [{
       id: this.id,
-      label: this.median + '\n' + this.id + '\n' + this.ml.toString() + '\n' + this.mr
+      label: "x-mid: "+this.median + '\n' + str
     }];
     var edges = [];
     if (this.left) {

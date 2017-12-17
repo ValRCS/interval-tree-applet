@@ -1,43 +1,67 @@
 "use strict";
 
+var data;
+var points = [];
+
 function AddPoint() {
   var x = document.forms["EnterPointForm"]["x"].value;
   var y = document.forms["EnterPointForm"]["y"].value;
   if (x == "" || y == "") {
-    alert("Name must be filled out");
+    alert("Points must be filled out");
     return false;
   }
+  x = Number(x);
+  y = Number(y);
   points.push([x, y]);
-  document.getElementById("points_text").innerHTML = points.toString();
-  var tree = constructIntervalTree(points);
 
+  var cList = $('#points_text')
+  var li = $('<li/>')
+    .click(function() {
+      points.splice($(this).index(), 1);
+      $(this).remove();
+      var tree = constructIntervalTree(points);
+      if (tree) {
+        data = tree.getData();
+      } else {
+        data = {
+          nodes: [],
+          edges: []
+        };
+      }
+      draw()
+    })
+    .text(x + ',' + y)
+    .addClass("point")
+    .appendTo(cList);
+
+  var tree = constructIntervalTree(points);
+  data = tree.getData();
+  draw();
 }
 
-// var directionInput = $("#direction");
-// $("#btn-UD").click(function () {
-//     directionInput.value = "UD";
-//     draw();
-// });
-// $("#btn-DU").click(function () {
-//     directionInput.value = "DU";
-//     draw();
-// });
-// $("#btn-LR").click(function () {
-//     directionInput.value = "LR";
-//     draw();
-// )};
-// $("#btn-RL").click(function () {
-//     directionInput.value = "RL";
-//     draw();
-// };
+function Query() {
+  var x = document.forms["QueryForm"]["x"].value;
+  if (x == "") {
+    alert("Coordinate must be filled out");
+    return false;
+  }
+  x = Number(x);
+}
 
-function draw(data) {
+function draw() {
   var container = $('#mynetwork')[0];
   var options = {
     layout: {
       hierarchical: {
-        direction: "UD",
-        sortMethod: 'directed'
+        direction: $("#direction").val(),
+        sortMethod: 'directed',
+        nodeSpacing: 400
+      }
+    },
+    physics: {
+      enabled: true,
+      barnesHut: {
+        avoidOverlap: 1
       }
     }
   };
@@ -46,6 +70,22 @@ function draw(data) {
 
 $(document).ready(function() {
   $.getScript("./intervaltree.js");
+  $("#btn-UD").click(function() {
+    $('#direction').val("UD");
+    draw();
+  });
+  $("#btn-DU").click(function() {
+    $('#direction').val("DU");
+    draw();
+  });
+  $("#btn-LR").click(function() {
+    $('#direction').val("LR");
+    draw();
+  });
+  $("#btn-RL").click(function() {
+    $('#direction').val("RL");
+    draw();
+  });
   var tree = constructIntervalTree([
     [1888, 1971],
     [1874, 1951],
@@ -54,57 +94,6 @@ $(document).ready(function() {
     [1756, 1791],
     [1585, 1672]
   ]);
-  draw({
-    nodes: nodes,
-    edges: edges
-  });
-  draw(tree.getData());
+  data = tree.getData();
+  draw();
 });
-
-var points = [];
-
-// create an array with nodes
-var nodes = [{
-    id: 1,
-    label: 'Node 1'
-  },
-  {
-    id: 2,
-    label: 'Node 2'
-  },
-  {
-    id: 3,
-    label: 'Node 3'
-  },
-  {
-    id: 4,
-    label: 'Node 4'
-  },
-  {
-    id: 5,
-    label: 'Node 5'
-  }
-];
-
-// create an array with edges
-var edges = [{
-    from: 1,
-    to: 3
-  },
-  {
-    from: 1,
-    to: 2
-  },
-  {
-    from: 2,
-    to: 4
-  },
-  {
-    from: 2,
-    to: 5
-  },
-  {
-    from: 3,
-    to: 3
-  }
-];
