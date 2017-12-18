@@ -148,9 +148,11 @@ function constructIntervalTree(s) {
   }
 
   if (l.length > 0) {
+    explain("Recurring on left child of node with median ("+median+")");
     t.left = constructIntervalTree(l);
   }
   if (r.length > 0) {
+    explain("Recurring on right child of node with median ("+median+")");
     t.right = constructIntervalTree(r);
   }
   return t;
